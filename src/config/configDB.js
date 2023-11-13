@@ -1,4 +1,4 @@
-import mysql from 'mysql2'
+import mysql from 'mysql2/promise'
 import {
     DB_HOST,
     DB_PORT,
@@ -17,14 +17,14 @@ const conectar = mysql.createPool({
 
 })
 
-conectar.getConnection((err, connection) =>{
-    if(err){
-        console.error(('Error en la conexión a la base de datos '+ err.stack))
-        return;
-    }
-    console.log('Conexión Exitosa')
-
-
-})
+conectar
+    .getConnection()
+    .then((connection) => {
+        console.log('Conexión a la base de datos exitosa');
+        connection.release();
+    })
+    .catch((error) => {
+        console.error('Error en la conexión a la base de datos:', error);
+    });
 
 export {conectar}

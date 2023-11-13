@@ -8,4 +8,11 @@ const uploadStrategy = multer({
     { name: 'documento', maxCount: 1 }
 ]);
 
-export default uploadStrategy;
+const uploadimage = multer({
+    storage: inMemoryStorage
+}).fields([
+    { name: 'miniatura', maxCount: 1 },
+]);
+
+export {uploadStrategy, uploadimage};
+
